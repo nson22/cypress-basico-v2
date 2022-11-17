@@ -26,19 +26,19 @@
 
 Cypress.Commands.add('fillMandatoryFieldsAndSubmit', ({ firstname, lastname, email, phone_number, help_message }) => {
   cy.get('#firstName')
-    .type(firstname)
+    .invoke('val', firstname)
 
   cy.get('#lastName')
-    .type(lastname)
+    .invoke('val', lastname)
 
   cy.get('#email')
-    .type(email)
+    .invoke('val', email)
 
   cy.get('#phone')
-    .type(phone_number)
+    .invoke('val', phone_number)
 
   cy.get('#open-text-area')
-    .type(help_message, { delay: 0 })
+    .invoke('val', help_message, { delay: 0 })
 
   cy.contains('button', 'Enviar').click()
 

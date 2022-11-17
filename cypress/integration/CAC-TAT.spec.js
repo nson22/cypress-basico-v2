@@ -7,7 +7,7 @@
 /// <reference types="Cypress" />
 
 describe('Central de Atendimento ao Cliente TAT', function () {
-  const lorem = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores qui doloremque architecto enim, molestias omnis non ad, maxime, iste ea repellat voluptatibus est similique quidem. Quisquam sit quis adipisci reprehenderit!'
+  const test = 'Test'
 
 
   beforeEach('verifica o título da aplicação', function () {
@@ -15,21 +15,21 @@ describe('Central de Atendimento ao Cliente TAT', function () {
   })
 
   // Exercicio e exercicio extra 01
-  it('preenche os campos obrigatórios e envia o formulário', () => {
+  it.only('preenche os campos obrigatórios e envia o formulário', () => {
     cy.get('#firstName')
-      .type('Glecinilson')
+      .invoke('val', 'Glecinilson')
 
     cy.get('#lastName')
-      .type('Silva')
+      .invoke('val', 'Silva')
 
     cy.get('#email')
-      .type('glecinilson@gmail.com')
+      .invoke('val', 'glecinilson@gmail.com')
 
     cy.get('#phone')
-      .type('92981926618')
+      .invoke('val', '92981926618')
 
     cy.get('#open-text-area')
-      .type(lorem, { delay: 0 })
+      .invoke('val', test, { delay: 0 })
 
     cy.contains('button', 'Enviar').click()
 
@@ -43,19 +43,19 @@ describe('Central de Atendimento ao Cliente TAT', function () {
   // Exercicio extra 02
   it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
     cy.get('#firstName')
-      .type('Glecinilson')
+      .invoke('val', 'Glecinilson')
 
     cy.get('#lastName')
-      .type('Silva')
+      .invoke('val', 'Silva')
 
     cy.get('#email')
-      .type('glecinilson.com')
+      .invoke('val', 'glecinilson.com')
 
     cy.get('#phone')
-      .type('92981926618')
+      .invoke('val', '92981926618')
 
     cy.get('#open-text-area')
-      .type(lorem, { delay: 0 })
+      .invoke('val', test, { delay: 0 })
 
     cy.contains('button', 'Enviar').click()
     cy.clock()
@@ -67,35 +67,35 @@ describe('Central de Atendimento ao Cliente TAT', function () {
   // Exercicio extra 03
   it('verificar se o campo número de telefone aceita somente números', () => {
     cy.get('#firstName')
-      .type('Glecinilson')
+      .invoke('val', 'Glecinilson')
 
     cy.get('#lastName')
-      .type('Silva')
+      .invoke('val', 'Silva')
 
     cy.get('#email')
-      .type('glecinilson.com')
+      .invoke('val', 'glecinilson.com')
 
     cy.get('#phone')
-      .type('assasddddds')
+      .invoke('val', 'assasddddds')
       .should('have.value', '')
   });
 
   // Exercicio extra 04
   it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
     cy.get('#firstName')
-      .type('Glecinilson')
+      .invoke('val', 'Glecinilson')
 
     cy.get('#lastName')
-      .type('Silva')
+      .invoke('val', 'Silva')
 
     cy.get('#email')
-      .type('glecinilson@gmail.com')
+      .invoke('val', 'glecinilson@gmail.com')
 
     cy.get('#phone-checkbox')
       .check()
 
     cy.get('#open-text-area')
-      .type(lorem)
+      .invoke('val', test)
 
     cy.contains('button', 'Enviar').click()
     cy.clock()
@@ -107,31 +107,31 @@ describe('Central de Atendimento ao Cliente TAT', function () {
   // Exercicio extra 05
   it('preenche e limpa os campos nome, sobrenome, email e telefone', () => {
     cy.get('#firstName')
-      .type('Glecinilson')
+      .invoke('val', 'Glecinilson')
       .should('have.value', 'Glecinilson')
       .clear()
       .should('have.value', '')
 
     cy.get('#lastName')
-      .type('Silva')
+      .invoke('val', 'Silva')
       .should('have.value', 'Silva')
       .clear()
       .should('have.value', '')
 
     cy.get('#email')
-      .type('glecinilson@gmail.com')
+      .invoke('val', 'glecinilson@gmail.com')
       .should('have.value', 'glecinilson@gmail.com')
       .clear()
       .should('have.value', '')
 
     cy.get('#phone')
-      .type('92981926618')
+      .invoke('val', '92981926618')
       .should('have.value', '92981926618')
       .clear()
       .should('have.value', '')
 
     cy.get('#open-text-area')
-      .type('Preciso de ajuda')
+      .invoke('val', 'Preciso de ajuda')
       .should('have.value', 'Preciso de ajuda')
       .clear()
       .should('have.value', '')
@@ -153,37 +153,38 @@ describe('Central de Atendimento ao Cliente TAT', function () {
   });
 
   // Exercicio extra 07
-  it('envia o formuário com sucesso usando um comando customizado', () => {
-    let user = {
-      firstname: 'Glecinilson',
-      lastname: 'Silva',
-      email: `Glecinilson.Silva@gmail.com`.toLowerCase(),
-      phone_number: '92981926618',
-      help_message: lorem
-    }
-    cy.fillMandatoryFieldsAndSubmit(user)
-    cy.clock()
-    cy.get('.success').should('be.visible')
-    cy.tick()
-    cy.get('.success').should('not.be.visible')
+  it.only('envia o formuário com sucesso usando um comando customizado', () => {
+    Cypress._.times(5, () => {
+      let user = {
+        firstname: 'Glecinilson',
+        lastname: 'Silva',
+        email: `Glecinilson.Silva@gmail.com`.toLowerCase(),
+        phone_number: '92981926618',
+        help_message: test
+      }
+      cy.fillMandatoryFieldsAndSubmit(user)
+      cy.clock()
+      cy.get('.success').should('be.visible')
+      cy.tick()
+    })
   });
 
   // Exercicio extra 08
   it('Contains', () => {
     cy.get('#firstName')
-      .type('Glecinilson')
+      .invoke('val', 'Glecinilson')
 
     cy.get('#lastName')
-      .type('Silva')
+      .invoke('val', 'Silva')
 
     cy.get('#email')
-      .type('glecinilson@gmail.com')
+      .invoke('val', 'glecinilson@gmail.com')
 
     cy.get('#phone')
-      .type('92981926618')
+      .invoke('val', '92981926618')
 
     cy.get('#open-text-area')
-      .type('Preciso de ajuda')
+      .invoke('val', 'Preciso de ajuda')
 
     cy.contains('button', 'Enviar').click()
     cy.clock()
