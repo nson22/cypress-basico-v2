@@ -33,7 +33,10 @@ describe('Central de Atendimento ao Cliente TAT', function () {
 
     cy.contains('button', 'Enviar').click()
 
+    cy.clock()
     cy.get('.success').should('be.visible')
+    cy.tick(3000)
+    cy.get('.success').should('not.be.visible')
 
   });
 
@@ -55,8 +58,10 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       .type(lorem, { delay: 0 })
 
     cy.contains('button', 'Enviar').click()
+    cy.clock()
     cy.get('.error').should('be.visible')
-
+    cy.tick(3000)
+    cy.get('.error').should('not.be.visible')
   });
 
   // Exercicio extra 03
@@ -93,7 +98,10 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       .type(lorem)
 
     cy.contains('button', 'Enviar').click()
+    cy.clock()
     cy.get('.error').should('be.visible')
+    cy.tick(3000)
+    cy.get('.error').should('not.be.visible')
   });
 
   // Exercicio extra 05
@@ -129,13 +137,19 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       .should('have.value', '')
 
     cy.contains('button', 'Enviar').click()
+    cy.clock()
     cy.get('.error').should('be.visible')
+    cy.tick(3000)
+    cy.get('.error').should('not.be.visible')
   });
 
   // Exercicio extra 06
   it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
     cy.contains('button', 'Enviar').click()
+    cy.clock()
     cy.get('.error').should('be.visible')
+    cy.tick(3000)
+    cy.get('.error').should('not.be.visible')
   });
 
   // Exercicio extra 07
@@ -148,8 +162,10 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       help_message: lorem
     }
     cy.fillMandatoryFieldsAndSubmit(user)
+    cy.clock()
     cy.get('.success').should('be.visible')
-
+    cy.tick()
+    cy.get('.success').should('not.be.visible')
   });
 
   // Exercicio extra 08
@@ -170,7 +186,11 @@ describe('Central de Atendimento ao Cliente TAT', function () {
       .type('Preciso de ajuda')
 
     cy.contains('button', 'Enviar').click()
+    cy.clock()
     cy.get('.success').should('be.visible')
+    cy.tick(3000)
+    cy.get('.success').should('not.be.visible')
+
   });
 
   it('seleciona um produto (YouTube) por seu texto', () => {
